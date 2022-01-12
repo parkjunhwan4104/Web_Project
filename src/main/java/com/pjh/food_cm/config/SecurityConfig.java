@@ -1,0 +1,60 @@
+package com.pjh.food_cm.config;
+
+import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+@Configuration
+@EnableWebSecurity   //시큐리티 자체라는거
+@AllArgsConstructor  //매개변수넣을수있도록하는거
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    public void configure(WebSecurity web) throws Exception {  //시큐리티가 관리하는 파일들을 정함
+        web.ignoring().mvcMatchers("/css/", "/js/","/img/","/error/","/lib/**"); //시큐리티가 우리가 가지고 있는 파일들을 모두 관리해줌
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests(authorize ->authorize
+                
+                .mvcMatchers("/members/join").anonymous() //URL이 간소화될수있도록함,  회원가입하는 url, 어나니머스는 로그인이 되지 않은 사람도 해당 페이지를 들어갈수 있도록함
+                .mvcMatchers("/aritcles/**").permitAll() // 로그인한 사람만 사용할 수 있도록 하는거
+                .mvcMatchers("/admin/**").hasRole("ADMIN") //ADMIN만 해당 URL로 접속할수 있도록함
+                .anyRequest()
+                .denyAll() //위의 3개 페이지말고는 모두 다 거절해라
+        )
+                .formLogin()
+                    .loginPage("/members/login")
+                    .loginProcessingUrl("/doLogin")   //로그인이 이루어지는 페이지
+                    .usernameParameter("loginId")
+                    .passwordParameter("loginPw")
+                    .defaultSuccessUrl("/")         //로그인 성공후에 인덱스 페이지로 보내줌
+                .and()
+                .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("members/logout"))   //여기가 로그아웃 url
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .clearAuthentication(true)  //권한 정보를 삭제(true하면)
+                .and()
+                    .sessionManagement()
+                        .invalidSessionUrl("/") //유효하지 않은 세션이면 인덱스 페이지로 넘어감
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(true)  //동시접속을 차단해줌
+                        .expiredUrl("/");  //세션이 만료시에 이동할 url을 정해줌
+
+
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder(){  //비밀번호를 암호화시키는거
+        return new BCryptPasswordEncoder();
+    }
+
+}
