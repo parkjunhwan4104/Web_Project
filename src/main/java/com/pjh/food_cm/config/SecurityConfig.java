@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .defaultSuccessUrl("/")         //로그인 성공후에 인덱스 페이지로 보내줌
                 .and()
                 .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("members/logout"))   //여기가 로그아웃 url
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))   //여기가 로그아웃 url
                     .logoutSuccessUrl("/")
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
