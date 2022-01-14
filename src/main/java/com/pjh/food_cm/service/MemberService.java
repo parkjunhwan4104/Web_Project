@@ -50,7 +50,7 @@ public class MemberService implements UserDetailsService {
      * 회원가입
      * @param memberSaveForm
      */
-
+    @Transactional //회원정보를 추가하거나 수정하는 것은 트랜젝션을 걸어줘야함 ,detail 보는 거나 article조회는 추가로 필요없음
     public void save(MemberSaveForm memberSaveForm) throws IllegalStateException{
         
         isDuplicateMember(
