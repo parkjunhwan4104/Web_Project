@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {   //DB랑만 연결되는 클래스
     Optional<Member> findByLoginId(String loginId); //jpa에서 이 메소드를 optional로 지정했기때문에 optional로함
-    boolean existByLoginId(String loginId);
+    boolean existsByLoginId(String loginId);
 
-    boolean existByNickName(String nickname);
-    boolean existByEmail(String email);
+    boolean existsByNickname(String nickname);
+    boolean existsByEmail(String email);
 
 }

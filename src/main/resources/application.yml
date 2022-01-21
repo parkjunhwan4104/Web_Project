@@ -1,21 +1,31 @@
 server:
-  port: 8085
+  port: 8095
 
 
 spring:
+  devtools:
+    livereload:
+      enabled: true
+
+    freemarker:
+      cache: false
+
+    thymeleaf:
+      cache: false
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/food_cm?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull&connectTimeout=60
     username: PJH
     password: JUN
-jpa:
-  database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-  hibernate:
-    ddl-auto: create
-  properties:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      show_sql: true
-      format_sql: true
-    open-in-view: true
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      open-in-view: true
 
 

@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>회원 정보 수정</title>
 </head>
 <body>
-$END$
+<div layout:fragment="content">
+  <div class="mb-20"></div>
+  <div class="container">
+
+    <div class="content">
+      <div class="join-form">
+
+        <div class="join-title">
+          <h1>회원 정보 수정</h1>
+        </div>
+
+        <form action="" th:action="@{~/members/modify}" method="POST">
+
+          <div class="join-item">
+            <span>아이디</span>
+            <input type="text" name="loginId" th:value="${member.loginId}" readonly>
+          </div>
+
+          <div class="join-item">
+            <span>비밀번호</span>
+            <input type="password" name="loginPw" >
+          </div>
+
+          <div class="join-item">
+            <span>이름</span>
+            <input type="text" name="name" th:value="${member.name}" readonly >
+          </div>
+
+          <div class="join-item">
+            <span>닉네임</span>
+            <input type="text" name="nickname" th:value="${member.nickname}" >
+          </div>
+
+          <div class="join-item">
+            <span>이메일</span>
+            <input type="email" name="email" th:value="${member.email}" >
+          </div>
+
+          <div class="join-item">
+            <button>수정</button>
+            <a href="/">
+              <button type="button">취소</button>
+            </a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.pjh.food_cm.service;
 
+import com.pjh.food_cm.DTO.member.MemberModifyForm;
 import com.pjh.food_cm.DTO.member.MemberSaveForm;
 import com.pjh.food_cm.config.Role;
 import com.pjh.food_cm.dao.MemberRepository;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true) //쿼리가 다 날라가지 않고 읽을 때만?
@@ -21,7 +24,7 @@ public class MemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return memberRepository.findByLoginId(username).get();
+        return  memberRepository.findByLoginId(username).get();
     }
 
     /**
@@ -32,14 +35,14 @@ public class MemberService implements UserDetailsService {
      */
 
     public void isDuplicateMember(String loginId, String nickname,String email){
-        if(memberRepository.existByLoginId(loginId)){
+        if(memberRepository.existsByLoginId(loginId)){
             throw new IllegalStateException("이미 존재하는 아이디입니다.");
             
         }
-        else if(memberRepository.existByNickName(nickname)){
+        else if(memberRepository.existsByNickname(nickname)){
             throw new IllegalStateException("이미 존재하는 닉네임입니다.");
         }
-        else if(memberRepository.existByEmail(email)){
+        else if(memberRepository.existsByEmail(email)){
             throw new IllegalStateException("이미 존재하는 이메일입니다.");
         }
         
@@ -68,7 +71,54 @@ public class MemberService implements UserDetailsService {
                 memberSaveForm.getEmail(),
                 Role.MEMBER
         );
-        memberRepository.save(member);
+        memberRepository.save(member);  //DB에서의 정보를 업데이트하는 것
     }
+     public Member findByLoginId(String loginId) throws IllegalStateException{
+        Optional<Member> memberOptional=memberRepository.findByLoginId(loginId);
+        memberOptional.orElseThrow(     //로그인한 아이디가 존재하지 않을 떄의 대처
+                () -> new IllegalStateException("존재하지 않는 회원입니다.")
+        );
+        return memberOptional.get();
+     }
+
+    /**
+     * 회원정보 수정
+     * @param memberModifyForm
+     * @param loginId
+     * @return
+     */
+    @Transactional
+    public Long modifyMember(MemberModifyForm memberModifyForm, String loginId){
+        Member findMember = findByLoginId(loginId);
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+
+        findMember.modifyMember(
+                bCryptPasswordEncoder.encode(memberModifyForm.getLoginPw()),
+                memberModifyForm.getNickname(),
+                memberModifyForm.getEmail()
+        );
+        return findMember.getId();
+    }
+    
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

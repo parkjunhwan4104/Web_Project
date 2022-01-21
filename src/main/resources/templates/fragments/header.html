@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+
 </head>
-<body>
-$END$
-</body>
+
+<header th:fragment="headerFragment">
+
+  <div class="header">
+
+    <nav>
+
+      <ul>
+        <a href="/" class="text">
+          <span>음식 커뮤니티</span>
+        </a>
+      </ul>
+
+      <ul>
+        <li sec:authorize="isAnonymous()">
+          <a th:href="@{~/members/login}">로그인</a>
+          <a th:href="@{~/members/join}">회원가입</a>
+
+        </li>
+
+        <li sec:authorize="isAuthenticated()">
+          <div class="dropdown">
+            <div tabindex="0" class="m-1 btn">Dropdown</div>
+            <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
+              <li>
+                <a href="/articles/write">게시물 작성</a>
+              </li>
+              <li>
+                <a href="/members/modify">정보 수정</a>
+              </li>
+              <li>
+                <a href="/members/logout">로그아웃</a>
+              </li>
+            </ul>
+          </div>
+
+        </li>
+
+        <!--<li sec:authorize="isAuthenticated()">
+          <span sec:authentication="principal.username">님</span>
+        </li> -->
+      </ul>
+    </nav>
+  </div>
+</header>
 </html>

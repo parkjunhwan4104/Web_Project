@@ -1,2 +1,7 @@
-package com.pjh.food_cm.dao;public interface BoardRepository {
+package com.pjh.food_cm.dao;
+
+import com.pjh.food_cm.domain.Board;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BoardRepository extends JpaRepository<Board, Long> {
 }

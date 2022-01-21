@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
 </head>
 <body>
+<div layout:fragment="content">
+        <div class="mb-20"></div>
     <div class="container">
 
         <div class="content">
@@ -15,7 +19,7 @@
                     <h1>회원가입</h1>
                 </div>
 
-                <form action="" th:action="@{~/members/join}" method="post">
+                <form action="" th:action="@{~/members/join}" method="POST">
 
                     <div class="join-item">
                         <span>아이디</span>
@@ -53,7 +57,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
 </body>
 </html>

@@ -1,6 +1,9 @@
 package com.pjh.food_cm.controller;
 
+import com.pjh.food_cm.DTO.member.MemberLoginForm;
+import com.pjh.food_cm.DTO.member.MemberModifyForm;
 import com.pjh.food_cm.DTO.member.MemberSaveForm;
+import com.pjh.food_cm.domain.Member;
 import com.pjh.food_cm.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -10,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,7 +28,7 @@ public class MemberController {
      */
     @GetMapping("/members/join")
     public String showJoin(Model model){   //model은 html로 값을 넘겨줄수있는거
-        model.addAttribute("memberSaveForm",new MemberSaveForm());
+        model.addAttribute("memberSaveForm",new MemberSaveForm());  //memberSaveForm 이라는 이름으로 생성한 MemberSaveForm 객체를 추가한다.
         return "user/member/join";
     }
 
@@ -51,5 +56,32 @@ public class MemberController {
         return "redirect:/"; //로그인이 성공되었을 때 이동해야하는 주소
     }
 
+    @GetMapping("/members/login")
+    public String showLogin(Model model){
+        model.addAttribute("memberLoginForm",new MemberLoginForm());
+        return "user/member/login";
+    }
+
+    @GetMapping("/members/modify")
+    public String showModify(Model model, Principal principal){
+        Member findMember = memberService.findByLoginId(principal.getName()); //지금 로그인한 회원이 누군지 알 수 있음
+        model.addAttribute("member",findMember);
+        model.addAttribute("memberModifyForm",new MemberModifyForm());
+        return "user/member/modify";
+    }
+
+    @PostMapping("/members/modify")
+    public String doModify(MemberModifyForm memberModifyForm,Principal principal,Model model){
+
+       try {
+           memberService.modifyMember(memberModifyForm, principal.getName());
+       }
+       catch(Exception e){
+           model.addAttribute("err_msg",e.getMessage());
+           return "user/member/modify";
+       }
+       return "redirect:/";
+
+    }
 
 }
