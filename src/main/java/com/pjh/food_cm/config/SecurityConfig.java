@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     }
-    @Bean
+    @Bean //메소드에서 선언이되어 개발자들이 수동으로 등록해주는거
     public PasswordEncoder passwordEncoder(){  //비밀번호를 암호화시키는거
         return new BCryptPasswordEncoder();
     }

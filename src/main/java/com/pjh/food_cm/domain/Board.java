@@ -1,6 +1,7 @@
 package com.pjh.food_cm.domain;
 
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Board {
 
@@ -32,6 +34,13 @@ public class Board {
         board.detail=detail;
 
         return board;
+    }
+
+    public void modifyBoard(String name,String detail){
+        this.name=name;
+        this.detail=detail;
+        this.updateDate=LocalDateTime.now();
+
     }
 
 

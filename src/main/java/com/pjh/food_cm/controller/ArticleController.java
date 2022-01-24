@@ -1,7 +1,10 @@
 package com.pjh.food_cm.controller;
 
+import com.pjh.food_cm.DTO.article.ArticleDTO;
+import com.pjh.food_cm.DTO.article.ArticleModifyForm;
 import com.pjh.food_cm.DTO.article.ArticleSaveForm;
 import com.pjh.food_cm.dao.ArticleRepository;
+import com.pjh.food_cm.domain.Article;
 import com.pjh.food_cm.domain.Member;
 import com.pjh.food_cm.service.ArticleService;
 import com.pjh.food_cm.service.MemberService;
@@ -11,9 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,6 +53,55 @@ public class ArticleController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/articles/modify/{id}")
+    public String showModify(@PathVariable(name="id")Long id,Model model){
+        try{
+            Article article = articleService.getById(id);
+
+            model.addAttribute("articleModifyForm",new ArticleModifyForm(article.getTitle(),article.getBody()));
+
+            return "user/article/modify";
+        }catch(Exception e){
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/articles/modify/{id}")
+    public String doModify(@PathVariable(name="id")Long id,ArticleModifyForm articleModifyForm){
+        try{
+            articleService.modifyArticle(articleModifyForm,id);
+            return "redirect:/articles/"+ id;
+        }
+        catch(Exception e){
+            return "user/article/modify";
+        }
+    }
+
+    @GetMapping("/articles/delete/{id}")
+    public String deleteArticle(@PathVariable(name="id")Long id,Principal principal){ //principal은 현재 로그인한 사람을 의미
+        try{
+            ArticleDTO article = articleService.getArticle(id);
+            
+            if(article.getAuthorName()!= principal.getName()){
+                return "redirect:/";
+            }
+            articleService.delete(id);
+            return "redirect:/";
+        }
+        catch(Exception e){
+            return "redirect:/";
+
+        }
+    }
+
+    @GetMapping("/articles")
+    public String showList(Model model){
+        List<ArticleDTO> articleList = articleService.getArticleList();
+        model.addAttribute("articleList",articleList);
+        return "user/article/list";
+    }
+
 
 
 }

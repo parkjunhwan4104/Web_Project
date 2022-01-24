@@ -2,12 +2,14 @@ package com.pjh.food_cm.domain;
 
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter //값을 다른곳에서 사용할수 있도록 즉 articleDTO에서 사용할수 있도록
 @NoArgsConstructor(access= AccessLevel.PROTECTED)  //무분별하게 객체생성을 막기위해
 public class Article {
 
@@ -35,6 +37,13 @@ public class Article {
         article.body=body;
         return article;
     }
+
+    public void modifyArticle(String title,String body){
+        this.title=title;
+        this.body=body;
+        this.updateDate=LocalDateTime.now();
+    }
+
 
     public void setMember(Member member){
         this.member=member;
