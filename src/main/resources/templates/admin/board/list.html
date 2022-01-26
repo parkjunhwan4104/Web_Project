@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>게시판 생성</title>
 </head>
 <body>
-$END$
+    <div layout:fragment="content">
+
+        <div class="container">
+
+            <div class="contents">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                게시판 번호
+                            </th>
+
+                            <th>
+                                게시판 이름
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="board: ${boardList}">  <!--컨트롤러에서 넘겨준 보드리스트에서 하나씩 넘겨주는 거 -->
+                            <td>
+                                <span th:text="${board.id}"></span>
+                            </td>
+
+                            <td>
+                                <a th:href="@{~/admin/boards/} + ${board.id}">
+                                    <span th:text="${board.name}"></span>
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

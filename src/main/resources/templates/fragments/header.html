@@ -29,7 +29,7 @@
 
         <li sec:authorize="isAuthenticated()">
           <div class="dropdown">
-            <div tabindex="0" class="m-1 btn">Dropdown</div>
+            <div tabindex="0" class="m-1 btn" sec:authentication="principal.username" type="button"></div>
             <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
               <li>
                 <a href="/articles/write">게시물 작성</a>

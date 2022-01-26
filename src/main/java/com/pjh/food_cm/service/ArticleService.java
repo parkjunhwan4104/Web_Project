@@ -75,6 +75,7 @@ public class ArticleService {
         return articleDTOList;
     }
 
+    @Transactional
     public void delete(Long id){
         Article findArticle=getById(id);
 

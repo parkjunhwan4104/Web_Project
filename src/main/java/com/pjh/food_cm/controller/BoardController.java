@@ -40,7 +40,7 @@ public class BoardController {
     public String doAdd( BoardSaveForm boardSaveForm){
 
         boardService.save(boardSaveForm);
-        return "redirect:/";
+        return "redirect:/admin/boards";
     }
 
     @GetMapping("/boards")

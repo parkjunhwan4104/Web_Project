@@ -102,6 +102,19 @@ public class ArticleController {
         return "user/article/list";
     }
 
+    @GetMapping("/articles/{id}")
+    public String showDetail(@PathVariable(name="id")Long id,Model model){
+
+
+        try {
+            ArticleDTO findArticle = articleService.getArticle(id);
+            model.addAttribute("article", findArticle);
+            return "user/article/detail";   //게시물을 잘 찾았으면 detail로 리턴
+        }catch(Exception e){
+            return "redirect:/";
+        }
+    }
+
 
 
 }
