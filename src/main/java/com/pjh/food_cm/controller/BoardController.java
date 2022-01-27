@@ -64,17 +64,28 @@ public class BoardController {
         return "admin/board/detail";
     }
 
-    @GetMapping("/boards/modify")
-    public String showModifyBoard(Model model){
-        model.addAttribute("boardModifyForm",new BoardModifyForm());
-        return "admin/board/modify";
-    }
-
-    @PostMapping("/boards/modify")
-    public String doModifyBoard(BoardModifyForm boardModifyForm){
+    @GetMapping("/boards/modify/{id}")  //어떠한 게시판을 수정할지
+    public String showModifyBoard(@PathVariable(name="id") Long id,Model model){
 
         try{
-            boardService.modify(boardModifyForm);
+            BoardDTO board = boardService.getBoardDetail(id);
+
+            model.addAttribute("boardModifyForm",new BoardModifyForm(
+                    board.getName(),
+                    board.getDetail()
+            ));
+            return "admin/board/modify";
+        }catch(Exception e){
+            return "redirect:/admin/boards";
+        }
+
+    }
+
+    @PostMapping("/boards/modify/{id}")  //어떠한 게시판을 수정할지
+    public String doModifyBoard(@PathVariable (name="id") Long id, BoardModifyForm boardModifyForm){
+
+        try{
+            boardService.modify(id,boardModifyForm);
         }
         catch(Exception e){
             return "admin/board/modify";
