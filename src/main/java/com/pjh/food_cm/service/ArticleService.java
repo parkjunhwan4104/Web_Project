@@ -6,6 +6,7 @@ import com.pjh.food_cm.DTO.article.ArticleSaveForm;
 import com.pjh.food_cm.DTO.member.MemberModifyForm;
 import com.pjh.food_cm.dao.ArticleRepository;
 import com.pjh.food_cm.domain.Article;
+import com.pjh.food_cm.domain.Board;
 import com.pjh.food_cm.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
@@ -25,12 +26,13 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional
-    public void save(ArticleSaveForm articleSaveForm, Member member){
+    public void save(ArticleSaveForm articleSaveForm, Member member, Board board){
         Article article= Article.createArticle(
                 articleSaveForm.getTitle(),
                 articleSaveForm.getBody()
         );
         article.setMember(member);
+        article.setBoard(board);
         articleRepository.save(article);
     }
 

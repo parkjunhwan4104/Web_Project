@@ -5,7 +5,14 @@
   <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+  <style>
+    body, ul, li {
+      margin : 0;
+      padding:0;
+      list-style:none;
+    }
 
+  </style>
 </head>
 
 <header th:fragment="headerFragment">
@@ -23,7 +30,9 @@
       <ul>
         <li sec:authorize="isAnonymous()">
           <a th:href="@{~/members/login}">로그인</a>
+          <br>
           <a th:href="@{~/members/join}">회원가입</a>
+          <br>
 
         </li>
 

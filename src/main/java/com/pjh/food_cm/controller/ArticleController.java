@@ -3,10 +3,13 @@ package com.pjh.food_cm.controller;
 import com.pjh.food_cm.DTO.article.ArticleDTO;
 import com.pjh.food_cm.DTO.article.ArticleModifyForm;
 import com.pjh.food_cm.DTO.article.ArticleSaveForm;
+import com.pjh.food_cm.DTO.board.BoardDTO;
 import com.pjh.food_cm.dao.ArticleRepository;
 import com.pjh.food_cm.domain.Article;
+import com.pjh.food_cm.domain.Board;
 import com.pjh.food_cm.domain.Member;
 import com.pjh.food_cm.service.ArticleService;
+import com.pjh.food_cm.service.BoardService;
 import com.pjh.food_cm.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,34 +27,52 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
-
+    private final BoardService boardService;
     private final MemberService memberService;
-    @GetMapping("/articles/write")
-    public String showWrite(Model model){
-        model.addAttribute("articleSaveForm",new ArticleSaveForm());
 
+    @GetMapping("/boards/{id}/articles/write")
+    public String showArticleWrite(@PathVariable(name = "id") Long id, Model model) {
+
+        BoardDTO boardDetail = boardService.getBoardDetail(id);
+
+       
+        model.addAttribute("boardDetail", boardDetail);
+
+        model.addAttribute("articleSaveForm", new ArticleSaveForm());
+
+        //return "user/article/write";
         return "user/article/write";
     }
 
-    @PostMapping("/articles/write")
-    public String doWrite(@Validated ArticleSaveForm articleSaveForm, BindingResult bindingResult, Model model, Principal principal){
-        //principal은 시스템을 사용하려는 사용자, 시스템을 통칭한다.
-        if(bindingResult.hasErrors()){
+
+    @PostMapping("/boards/{id}/articles/write")
+    public String doWrite(@Validated ArticleSaveForm articleSaveForm, BindingResult bindingResult, Model model, Principal principal, @PathVariable(name = "id") Long id) {
+
+        if (bindingResult.hasErrors()) {
             return "user/article/write";
         }
         try {
-            //멤버가 잘있으면 save를 통해 저장해주고 서비스로 보내주고 멤버가 없으면 에러를 발생시켜 write페이지로 다시 가게함
 
             Member findMember = memberService.findByLoginId(principal.getName());
+            Board findBoard = boardService.getBoard(articleSaveForm.getBoardId());
 
             articleService.save(
-                    articleSaveForm, findMember
+                    articleSaveForm,
+                    findMember,
+                    findBoard
             );
-        }catch(IllegalStateException e){
-            model.addAttribute("err_msg",e.getMessage());
+
+        } catch (IllegalStateException e) {
+
+            model.addAttribute("err_msg", e.getMessage());
+
+
             return "user/article/write";
+
         }
-        return "redirect:/";
+
+
+        return "redirect:/articles";
     }
 
     @GetMapping("/articles/modify/{id}")
