@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="container">
+
+      <div class="contents">
+        <div class="text-center">
+          <span th:text="${boardName}"></span>
+        </div>
+        
+        <div>
+          <a href="/boards/1/articles/write">
+            <span>게시물 작성하기</span>
+          </a>
+        </div>
+
+        <table>
+            <tr>
+              <th> 게시판 이름 </th>
+              <th> 게시판 번호 </th>
+              <th> 게시판 제목 </th>
+            </tr>
+            <tr th:each="article:${articleList}">
+              <td th:text="${article.boardName}"></td>
+              <td th:text="${article.id}"></td>
+              <td>
+                <a th:href="@{~/articles/}+${article.id}">
+                  <span th:text="${article.title}"></span>
+                </a>
+              </td>
+            </tr>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

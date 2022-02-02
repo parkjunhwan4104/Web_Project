@@ -121,6 +121,9 @@ public class ArticleController {
     @GetMapping("/articles")
     public String showList(Model model){
         List<ArticleDTO> articleList = articleService.getArticleList();
+
+        ArticleDTO articleDTO=articleList.get(0); //게시판의 이름을 알아오기만 하면 되므로 0번인덱스로 해도됨
+        model.addAttribute("boardName",articleDTO.getBoardName());
         model.addAttribute("articleList",articleList);
         return "user/article/list";
     }
