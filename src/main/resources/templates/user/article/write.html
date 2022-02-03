@@ -20,7 +20,7 @@
 
            <form action="" th:action="@{~/boards/} + ${boardDetail.id} +@{/articles/write}" method="POST">
 
-                <input type="hidden" th.value="${boardDetail.id}" name="boardId">
+                <input type="hidden" th:value="${boardDetail.id}" name="board_id">
                 <div class="form-item">
                     <span>
                         제목

@@ -8,6 +8,7 @@ import com.pjh.food_cm.DTO.board.BoardSaveForm;
 import com.pjh.food_cm.dao.BoardRepository;
 import com.pjh.food_cm.domain.Article;
 import com.pjh.food_cm.domain.Board;
+import com.pjh.food_cm.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +25,11 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public void save(BoardSaveForm boardSaveForm){
+    public void save(BoardSaveForm boardSaveForm, Member member){
         Board board=Board.createBoard(
                 boardSaveForm.getName(),
-                boardSaveForm.getDetail()
+                boardSaveForm.getDetail(),
+                member
         );
 
         boardRepository.save(board);

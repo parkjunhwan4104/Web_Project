@@ -25,14 +25,18 @@ public class Board {
     private LocalDateTime regDate=LocalDateTime.now();
     private LocalDateTime updateDate=LocalDateTime.now();
 
-    @OneToMany(mappedBy = "board",cascade=CascadeType.REMOVE)  //fetch=FetchType.LAZY? 아닌가
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="member_id")  //보드 혼자만 어떤 회원인 게시물을 쓰는지 알수 있도록 하기 위해 1대1
+    private Member member;
+
+    @OneToMany(mappedBy = "board",fetch=FetchType.LAZY)  //cascade=CascadeType.REMOVE? 아닌가
     private List<Article> articles=new ArrayList<>();
 
-    public static Board createBoard(String name,String detail){
+    public static Board createBoard(String name,String detail,Member member){
         Board board=new Board();
         board.name=name;
         board.detail=detail;
-
+        board.member=member;
         return board;
     }
 

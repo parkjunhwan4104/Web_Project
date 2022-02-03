@@ -19,6 +19,7 @@ public class Datainit {
     @PostConstruct //서버를 내렸다가 올렸을 때 bean이 뜨고 postConstruct 어노테이션이 있는 것부터 가장 먼저 실행됨=> 가장 먼저 관리자가 DB에 생성되도록함
     public void init(){
         initService.initAdmin();
+        initService.initMember();
     }
 
     @Component
@@ -40,6 +41,24 @@ public class Datainit {
 
             memberRepository.save(admin);
         }
+
+        public void initMember(){
+            BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+
+            for(int i=0;i<5;i++){
+                Member member=Member.createMember(
+                        "user"+(i+1),
+                        bCryptPasswordEncoder.encode("user"+(i+1)),
+                        "user"+(i+1),
+                        "user"+(i+1),
+                        "user"+(i+1)+"@user.com",
+                        Role.MEMBER
+                );
+                memberRepository.save(member);
+            }
+
+        }
+
     }
 
 }

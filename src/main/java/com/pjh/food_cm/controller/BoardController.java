@@ -5,8 +5,10 @@ import com.pjh.food_cm.DTO.board.BoardModifyForm;
 import com.pjh.food_cm.DTO.board.BoardSaveForm;
 import com.pjh.food_cm.domain.Article;
 import com.pjh.food_cm.domain.Board;
+import com.pjh.food_cm.domain.Member;
 import com.pjh.food_cm.service.ArticleService;
 import com.pjh.food_cm.service.BoardService;
+import com.pjh.food_cm.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +29,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-
+    private final MemberService memberService; //게시판에서 어느 회원이 글을 썼는지 알 수 있게 사용해야함
 
     @GetMapping("/boards/add")
     public String showAdd(Model model){
@@ -37,9 +39,10 @@ public class BoardController {
     }
 
     @PostMapping("/boards/add")
-    public String doAdd( BoardSaveForm boardSaveForm){
+    public String doAdd( BoardSaveForm boardSaveForm,Principal principal){
 
-        boardService.save(boardSaveForm);
+        Member findAdmin=memberService.findByLoginId(principal.getName());
+        boardService.save(boardSaveForm,findAdmin);
         return "redirect:/admin/boards";
     }
 

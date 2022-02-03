@@ -14,6 +14,6 @@ public class ArticleSaveForm {
 
     private String body;
 
-    private Long boardId;
+    private Long board_id;
 
 }

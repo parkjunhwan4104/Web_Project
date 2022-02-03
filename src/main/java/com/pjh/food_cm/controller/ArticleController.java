@@ -52,9 +52,9 @@ public class ArticleController {
             return "user/article/write";
         }
         try {
-
+            Board findBoard = boardService.getBoard(articleSaveForm.getBoard_id());
             Member findMember = memberService.findByLoginId(principal.getName());
-            Board findBoard = boardService.getBoard(articleSaveForm.getBoardId());
+
 
             articleService.save(
                     articleSaveForm,
@@ -81,7 +81,7 @@ public class ArticleController {
 
             ArticleDTO article=articleService.getArticle(id);
 
-            model.addAttribute("articleModifyForm",new ArticleModifyForm(article.getTitle(),article.getBody(), article.getBoardId()));
+            model.addAttribute("article",article);
 
             return "user/article/modify";
         }catch(Exception e){
@@ -92,9 +92,9 @@ public class ArticleController {
     @PostMapping("/articles/modify/{id}")
     public String doModify(@PathVariable(name="id")Long id,ArticleModifyForm articleModifyForm){
         try{
-            Board findBoard=boardService.getBoard(id);
+            Board findBoard=boardService.getBoard(articleModifyForm.getBoard_id());
             articleService.modifyArticle(articleModifyForm,findBoard,id);
-            return "redirect:/articles/"+ id;
+            return "redirect:/admin/boards/"+ id;
         }
         catch(Exception e){
             return "user/article/modify";

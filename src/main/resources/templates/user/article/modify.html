@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 수정</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="contents">
+
+                <div class="form-item">
+                    <span th:text="${article.boardName}">게시판 이름</span>
+
+                </div>
+                <form action="" th:action="@{~/articles/modify/}+${article.id}" method="POST">
+
+                    <input type="hidden" th:value="${article.boardId}" name="board_id">  <!-- name을 board_id로 하는 이유는 articleModifyForm과 1대1 대응을 하기 위함임 -->
+
+                    <div class="form-item">
+                        <span>게시판 제목</span>
+                        <input type="text" name="title" th:value="${article.title}">
+                    </div>
+
+                    <br>
+
+                    <div class="form-item">
+                        <span>게시판 내용</span>
+                        <br>
+                        <textarea name="body"  cols="30" rows="10" th:text="${article.body}"></textarea>  <!-- textarea에서는 값을 넣어주기 위해 th:text 사용-->
+                    </div>
+
+                    <br>
+                    <div class="form-item">
+
+                        <button>수정</button>
+                        <a th:href="@{~/articles/}+${article.id}">
+                            <button>취소</button>
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
