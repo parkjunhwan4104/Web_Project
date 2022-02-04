@@ -90,14 +90,20 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/modify/{id}")
-    public String doModify(@PathVariable(name="id")Long id,ArticleModifyForm articleModifyForm){
+    public String doModify(@PathVariable(name="id")Long id,ArticleModifyForm articleModifyForm,Principal principal){
         try{
+
+            ArticleDTO findArticle = articleService.getArticle(id);
+            if(!findArticle.getMemberLoginId().equals(principal.getName())){   //현재 로그인 아이디와 게시물 작성자의 아이디를 비교
+                throw new IllegalStateException("잘못된 요청입니다."); //잘못된 요청이면 catch로가서 인덱스로감
+            }
+
             Board findBoard=boardService.getBoard(articleModifyForm.getBoard_id());
             articleService.modifyArticle(articleModifyForm,findBoard,id);
             return "redirect:/boards/"+ id;
         }
         catch(Exception e){
-            return "user/article/modify";
+            return "redirect:/";
         }
     }
 

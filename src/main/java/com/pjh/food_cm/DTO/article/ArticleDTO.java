@@ -14,8 +14,9 @@ public class ArticleDTO {
     private String title;
     
     private String body;
-    
-    private String authorName; //작성자 이름
+
+    private String memberLoginId; //로그인 아이디
+    private String authorName; //작성자 이름(닉네임)
 
     private String boardName;
 
@@ -28,6 +29,7 @@ public class ArticleDTO {
         this.id=article.getId();
         this.title=article.getTitle();
         this.body=article.getBody();
+        this.memberLoginId=article.getMember().getLoginId();
         this.authorName=article.getMember().getNickname();
         this.boardId=article.getBoard().getId();
         this.boardName=article.getBoard().getName();
