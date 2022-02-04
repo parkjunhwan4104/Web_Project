@@ -24,21 +24,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")  // 자동적으로 /admin이 url에 앞에 붙게됨 즉 아래에서 보면 /admin/boards/add 가 된다는거
+// @RequestMapping("/admin")   자동적으로 /admin이 url에 앞에 붙게됨 즉 아래에서 보면 /admin/boards/add 가 된다는거
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
     private final MemberService memberService; //게시판에서 어느 회원이 글을 썼는지 알 수 있게 사용해야함
 
-    @GetMapping("/boards/add")
+    @GetMapping("/admin/boards/add")
     public String showAdd(Model model){
         model.addAttribute("boardSaveForm",new BoardSaveForm());
         return "admin/board/add";
 
     }
 
-    @PostMapping("/boards/add")
+    @PostMapping("/admin/boards/add")
     public String doAdd( BoardSaveForm boardSaveForm,Principal principal){
 
         Member findAdmin=memberService.findByLoginId(principal.getName());
@@ -67,7 +67,7 @@ public class BoardController {
         return "admin/board/detail";
     }
 
-    @GetMapping("/boards/modify/{id}")  //어떠한 게시판을 수정할지
+    @GetMapping("/admin/boards/modify/{id}")  //어떠한 게시판을 수정할지
     public String showModifyBoard(@PathVariable(name="id") Long id,Model model){
 
         try{
@@ -85,7 +85,7 @@ public class BoardController {
 
     }
 
-    @PostMapping("/boards/modify/{id}")  //어떠한 게시판을 수정할지
+    @PostMapping("/admin/boards/modify/{id}")  //어떠한 게시판을 수정할지
     public String doModifyBoard(@PathVariable (name="id") Long id, BoardModifyForm boardModifyForm){
 
         try{
@@ -97,7 +97,7 @@ public class BoardController {
         return "redirect:/";
     }
 
-    @GetMapping("/boards/delete/{id}")
+    @GetMapping("/admin/boards/delete/{id}")
     public String doDeleteBoard(@PathVariable(name="id") Long id){
         try{
             boardService.delete(id);    //보드 서비스의 delete로 가서 해당 게시판이 존재하지 않으면 에러를 catch함
