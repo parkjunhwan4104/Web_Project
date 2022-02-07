@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -73,13 +75,22 @@ public class MemberService implements UserDetailsService {
         );
         memberRepository.save(member);  //DB에서의 정보를 업데이트하는 것
     }
-     public Member findByLoginId(String loginId) throws IllegalStateException{
+     public Member findByLoginId(String loginId) throws IllegalStateException{  //회원이 로그인한 아이디로 찾는거
         Optional<Member> memberOptional=memberRepository.findByLoginId(loginId);
         memberOptional.orElseThrow(     //로그인한 아이디가 존재하지 않을 떄의 대처
                 () -> new IllegalStateException("존재하지 않는 회원입니다.")
         );
         return memberOptional.get();
      }
+
+    public Member findById(Long id){  //회원 식별번호로 찾는거
+        Optional<Member> byId = memberRepository.findById(id);
+
+        byId.orElseThrow(
+                ()-> new NoSuchElementException("해당 회원은 존재하지 않습니다.")
+        );
+        return byId.get();
+    }
 
     /**
      * 회원정보 수정
@@ -88,17 +99,22 @@ public class MemberService implements UserDetailsService {
      * @return
      */
     @Transactional
-    public Long modifyMember(MemberModifyForm memberModifyForm, String loginId){
-        Member findMember = findByLoginId(loginId);
+    public Long modifyMember(Long id,MemberModifyForm memberModifyForm, String loginId){
+        Member member=findByLoginId(loginId);
+
+
         BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
 
-        findMember.modifyMember(
+
+        member.modifyMember(
                 bCryptPasswordEncoder.encode(memberModifyForm.getLoginPw()),
                 memberModifyForm.getNickname(),
                 memberModifyForm.getEmail()
         );
-        return findMember.getId();
+        return member.getId();
     }
+
+
     
 
 }

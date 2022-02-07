@@ -5,6 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <title>게시물 세부정보</title>
+
 </head>
 <body>
   <div layout:fragment="content">
@@ -12,28 +13,42 @@
 
       <div class="contents">
         <div>
-          <span th:text="${article.boardName}">게시판</span>
-          <span th:text="${article.title}">제목</span>
+          <h3>게시판: </h3>
+
+          <span th:text="${article.boardName}"></span>
+
+          <br>
+          <h3>제목  </h3>
+          <h3>작성자 </h3>
+          <h3>작성일 </h3>
+
+          <br>
+
+          <span th:text="${article.title}"></span>
+
+
+
+          <span th:text="${article.authorName}"></span>
+
+
+          <span th:text="${#temporals.format(article.regDate,'yyyy-MM-dd')}"></span>
+
 
           <div class="">
-            <span th:text="${article.authorName}"></span>
-            <span th:text="${#temporals.format(article.regDate,'yyyy-MM-dd')}"></span>
-          </div>
-
-          <div class="">
+            <h3>내용:   </h3>
             <span th:text="${article.body}"></span>
           </div>
           <div class="">
             <a th:href="@{~/articles/delete/}+${article.id}">
               <span>삭제</span>
             </a>
-          </div>
 
-          <div class="">
             <a th:href="@{~/articles/modify/}+${article.id}">
               <span>수정</span>
             </a>
           </div>
+
+
         </div>
       </div>
 
