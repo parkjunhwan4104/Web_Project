@@ -19,32 +19,39 @@
                     <h1>회원가입</h1>
                 </div>
 
-                <form action="" th:action="@{~/members/join}" method="POST">
+                <form action="" th:action="@{~/members/join}" th:object="${memberSaveForm}" method="POST">
+                    <!--th:object인 memberSaveForm으로부터  th:field의 loginId를 매핑해줌 이때 *를 붙여줘야함 field에  -->
 
                     <div class="join-item">
                         <span>아이디</span>
-                        <input type="text" name="loginId">
+                        <input type="text" name="loginId" th:field="*{loginId}" th:errorclass="field-error">
+                        <span th:errors="*{loginId}"></span>
                     </div>
 
                     <div class="join-item">
                         <span>비밀번호</span>
-                        <input type="password" name="loginPw">
+                        <input type="password" name="loginPw" th:field="*{loginPw}" th:errorclass="field-error">
+                        <span th:errors="*{loginPw}"></span>
                     </div>
 
                     <div class="join-item">
                         <span>이름</span>
-                        <input type="text" name="name">
+                        <input type="text" name="name" th:field="*{name}" th:errorclass="field-error">
+                        <span th:errors="*{name}"></span>
                     </div>
 
                     <div class="join-item">
                         <span>닉네임</span>
-                        <input type="text" name="nickname">
+                        <input type="text" name="nickname" th:field="*{nickname}" th:errorclass="field-error">
+                        <span th:errors="*{nickname}"></span>
                     </div>
 
                     <div class="join-item">
                         <span>이메일</span>
-                        <input type="email" name="email">
+                        <input type="email" name="email" th:field="*{email}" th:errorclass="field-error">
+                        <span th:errors="*{email}"></span>
                     </div>
+
 
                     <div class="join-item">
                         <button>회원가입</button>

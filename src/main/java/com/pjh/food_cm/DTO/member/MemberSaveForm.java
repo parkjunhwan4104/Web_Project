@@ -10,19 +10,19 @@ public class MemberSaveForm {  //멤버클래스에서 만든 멤버 entity를 �
 
 
     //회원가입시 필요한 정보를 저장
-    @NotBlank
+    @NotBlank(message="아이디를 입력해 주세요") // 공백으로 입력시 이러한 메세지가 뜨도록함
     private String loginId;
 
-    @NotBlank
+    @NotBlank(message="비밀번호를 입력해 주세요")
     private String loginPw;
 
-    @NotBlank
+    @NotBlank(message="이름을 입력해 주세요")
     private String name;
 
-    @NotBlank
+    @NotBlank(message="닉네임을 입력해 주세요")
     private String nickname;
 
-    @NotBlank
+    @NotBlank(message="이메일을 입력해 주세요")
     private String email;
 
 

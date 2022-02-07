@@ -5,25 +5,31 @@
 <head>
   <meta charset="UTF-8">
   <title>게시물 세부정보</title>
-
+  <style>
+            bold{
+                font-weight: bold;
+            }
+  </style>
 </head>
 <body>
   <div layout:fragment="content">
+    <hr>
     <div class="container">
 
       <div class="contents">
         <div>
-          <h3>게시판: </h3>
+          <bold>게시판: </bold>
 
           <span th:text="${article.boardName}"></span>
+          <hr>
 
           <br>
-          <h3>제목  </h3>
-          <h3>작성자 </h3>
-          <h3>작성일 </h3>
+          <bold>제목  </bold>
+          <bold>작성자 </bold>
+          <bold>작성일 </bold>
 
           <br>
-
+          <br>
           <span th:text="${article.title}"></span>
 
 
@@ -33,11 +39,14 @@
 
           <span th:text="${#temporals.format(article.regDate,'yyyy-MM-dd')}"></span>
 
-
+          <br>
+          <br>
           <div class="">
-            <h3>내용:   </h3>
+            <bold>내용:   </bold>
             <span th:text="${article.body}"></span>
           </div>
+
+          <hr>
           <div class="">
             <a th:href="@{~/articles/delete/}+${article.id}">
               <span>삭제</span>
