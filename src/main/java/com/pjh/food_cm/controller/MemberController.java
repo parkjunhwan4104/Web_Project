@@ -66,6 +66,9 @@ public class MemberController {
 
     @GetMapping("/members/modify/{id}")
     public String showModify(Model model, Principal principal,@PathVariable(name="id")Long id){
+
+
+
         Member findMember = memberService.findById(id); //지금 로그인한 회원이 누군지 알 수 있음
 
         if(!findMember.getLoginId().equals(principal.getName())){
@@ -79,7 +82,11 @@ public class MemberController {
     }
 
     @PostMapping("/members/modify/{id}")
-    public String doModify(@PathVariable(name="id")Long id,MemberModifyForm memberModifyForm,Principal principal,Model model){
+    public String doModify(@PathVariable(name="id")Long id,Principal principal,Model model,@Validated MemberModifyForm memberModifyForm,BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            return "user/member/modify";
+        }
 
         Member findMember=memberService.findById(id);
 

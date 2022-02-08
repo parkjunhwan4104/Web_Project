@@ -100,7 +100,7 @@ public class MemberService implements UserDetailsService {
      */
     @Transactional
     public Long modifyMember(Long id,MemberModifyForm memberModifyForm, String loginId){
-        Member member=findByLoginId(loginId);
+        Member member=findById(id);
 
 
         BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
