@@ -2,10 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
-
+    <!--아래 let 부터 /*]]*/ 전까지  자바 스크립트의 문법임 에러 메세지 경고 띄우는거(컨트롤러의 attribute의 err_msg와 매핑)-->
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let err_msg=[[${err_msg}]]
+
+        if(err_msg!=null ||err_msg!=undefined){
+        alert(err_msg);
+        }
+        /*]]*/
+    </script>
 </head>
 <body>
 <div layout:fragment="content">

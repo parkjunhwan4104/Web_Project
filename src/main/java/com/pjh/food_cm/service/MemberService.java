@@ -115,6 +115,13 @@ public class MemberService implements UserDetailsService {
     }
 
 
+    public Member getMember(String loginId){
+        Member member=findByLoginId(loginId);
+        return member;
+    }
+
+
+
     
 
 }
