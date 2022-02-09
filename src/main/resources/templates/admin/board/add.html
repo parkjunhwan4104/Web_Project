@@ -5,14 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <title>게시판 생성</title>
-  <style>
-    body, ul, li, h1 {
-    margin:0;
-    padding:0;
-    list-style:none;
-    }
 
-  </style>
 
 
 </head>
@@ -23,24 +16,25 @@
 
     <div class="contents">
 
-      <form action="" th:action="@{~/admin/boards/add}" method="POST">
+      <form action="" th:action="@{~/admin/boards/add}" th:object="${boardSaveForm}" method="POST">
 
         <div class="form-item">
-                    <span>
-                        게시판 이름
-                    </span>
-          <input name="name" type="text"  required>
+          <span>게시판 이름</span>
+          <input name="name" type="text" th:field="*{name}" th:errorclass="field-error">  <!-- th:errorclass는 th:field에서 지정한 필드에 오류가 있으면 class 정보를 추가한다. -->
+          <span th:errors="*{name}"></span>
         </div>
 
         <div class="form-item">
           <span>게시판 설명</span>
-          <textarea name="detail"  cols="30" rows="10"></textarea>
+          <textarea name="detail"  cols="30" rows="10"  ></textarea>
+
+          <span th:errors="*{detail}"></span>   <!--이 줄이 saveForm에서 notblank인 곳에서 공백 그대로 제출하면 notblank의 메세지를 출력하게됨 -->
         </div>
 
         <div class="form-item">
           <button>확인</button>
           <a href="/">
-            <button>취소</button>
+            <button type="button">취소</button>
           </a>
         </div>
 

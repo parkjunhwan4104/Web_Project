@@ -33,11 +33,11 @@ public class ArticleController {
     @GetMapping("/boards/{id}/articles/write")
     public String showArticleWrite(@PathVariable(name = "id") Long id, Model model) {
 
-        BoardDTO boardDetail = boardService.getBoardDetail(id);
+        ArticleDTO findArticle = articleService.getArticle(id);
 
 
-        model.addAttribute("boardDetail", boardDetail);
-
+        model.addAttribute("boardName", findArticle.getBoardName());
+        model.addAttribute("boardId",findArticle.getBoardId());
         model.addAttribute("articleSaveForm", new ArticleSaveForm());
 
         //return "user/article/write";
@@ -49,6 +49,11 @@ public class ArticleController {
     public String doWrite(@Validated ArticleSaveForm articleSaveForm, BindingResult bindingResult, Model model, Principal principal, @PathVariable(name = "id") Long id) {
 
         if (bindingResult.hasErrors()) {
+            ArticleDTO findArticle = articleService.getArticle(id);
+
+
+            model.addAttribute("boardName", findArticle.getBoardName());
+            model.addAttribute("boardId",findArticle.getBoardId());
             return "user/article/write";
         }
         try {
@@ -79,9 +84,17 @@ public class ArticleController {
     public String showModify(@PathVariable(name="id")Long id,Model model){
         try{
 
-            ArticleDTO article=articleService.getArticle(id);
+            ArticleDTO findArticle=articleService.getArticle(id);
 
-            model.addAttribute("article",article);
+            model.addAttribute("boardName",findArticle.getBoardName());
+            model.addAttribute("boardId",findArticle.getBoardId());
+            model.addAttribute("articleId",findArticle.getId());
+            model.addAttribute("articleModifyForm",new ArticleModifyForm(
+                    findArticle.getTitle(),
+                    findArticle.getBody(),
+                    findArticle.getBoardId(),
+                    findArticle.getBoardName()
+            ));
 
             return "user/article/modify";
         }catch(Exception e){
@@ -90,8 +103,19 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/modify/{id}")
-    public String doModify(@PathVariable(name="id")Long id,ArticleModifyForm articleModifyForm,Principal principal){
+    public String doModify(@PathVariable(name="id")Long id,@Validated ArticleModifyForm articleModifyForm,BindingResult bindingResult,Principal principal,Model model){
+
+        if(bindingResult.hasErrors()){
+            ArticleDTO findArticle=articleService.getArticle(id);
+            model.addAttribute("boardName",findArticle.getBoardName());
+            model.addAttribute("boardId",findArticle.getBoardId());
+            model.addAttribute("articleId",findArticle.getId());
+
+            return "user/article/modify";
+        }
+
         try{
+
 
             ArticleDTO findArticle = articleService.getArticle(id);
             if(!findArticle.getMemberLoginId().equals(principal.getName())){   //현재 로그인 아이디와 게시물 작성자의 아이디를 비교

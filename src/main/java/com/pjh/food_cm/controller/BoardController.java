@@ -33,17 +33,22 @@ public class BoardController {
 
     @GetMapping("/admin/boards/add")
     public String showAdd(Model model){
+
+
         model.addAttribute("boardSaveForm",new BoardSaveForm());
         return "admin/board/add";
 
     }
 
     @PostMapping("/admin/boards/add")
-    public String doAdd( BoardSaveForm boardSaveForm,Principal principal){
+    public String doAdd(@Validated BoardSaveForm boardSaveForm,BindingResult bindingResult,Principal principal){
 
+        if(bindingResult.hasErrors()){
+            return "admin/board/add";
+        }
         Member findAdmin=memberService.findByLoginId(principal.getName());
         boardService.save(boardSaveForm,findAdmin);
-        return "redirect:/admin/boards";
+        return "redirect:/boards";
     }
 
     @GetMapping("/boards")
@@ -73,7 +78,8 @@ public class BoardController {
         try{
             BoardDTO board = boardService.getBoardDetail(id);
 
-            model.addAttribute("board",new BoardModifyForm(
+            model.addAttribute("boardId",board.getId());
+            model.addAttribute("boardModifyForm",new BoardModifyForm(
                     board.getId(),
                     board.getName(),
                     board.getDetail()
@@ -86,7 +92,13 @@ public class BoardController {
     }
 
     @PostMapping("/admin/boards/modify/{id}")  //어떠한 게시판을 수정할지
-    public String doModifyBoard(@PathVariable (name="id") Long id, BoardModifyForm boardModifyForm){
+    public String doModifyBoard(@PathVariable (name="id") Long id,@Validated BoardModifyForm boardModifyForm,BindingResult bindingResult,Model model){
+
+        BoardDTO findBoard = boardService.getBoardDetail(id);
+        if(bindingResult.hasErrors()){
+            model.addAttribute("boardId",findBoard.getId());
+            return "admin/board/modify";
+        }
 
         try{
             boardService.modify(id,boardModifyForm);
