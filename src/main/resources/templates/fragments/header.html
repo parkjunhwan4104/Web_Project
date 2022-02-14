@@ -5,12 +5,9 @@
   <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/daisyui@1.24.3/dist/full.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+
   <style>
-    body, ul, li {
-      margin : 0;
-      padding:0;
-      list-style:none;
-    }
+
 
   </style>
 </head>
@@ -19,35 +16,37 @@
 
   <div class="header">
 
-    <nav>
+    <nav class="flex mt-6 mx-auto p-3">
 
-      <ul>
-        <a href="/" class="text">
+      <ul class="flex">
+        <a href="/"  class="text-2xl ml-24">
           <span>음식 커뮤니티</span>
         </a>
       </ul>
 
-      <ul>
+      <ul class="flex ml-auto mr-24">
         <li sec:authorize="isAnonymous()">
-          <a th:href="@{~/members/login}">로그인</a>
-          <br>
-          <a th:href="@{~/members/join}">회원가입</a>
-          <br>
+          <a class="mr-4" th:href="@{~/members/login}">로그인</a>
+
+          <a  th:href="@{~/members/join}">회원가입</a>
+
 
         </li>
 
+
+       <!--<div tabindex="0" class="m-1 btn" sec:authentication="principal.username" type="button">님</div>  -->
         <li sec:authorize="isAuthenticated()">
-          <div class="dropdown">
+          <div class="dropdown dropdown-end">
             <div tabindex="0" class="m-1 btn" sec:authentication="principal.username" type="button">님</div>
             <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
               <li>
-                <a href="/articles/write">게시물 작성</a>
+                <a href="/articles/write/">게시글 작성</a>
               </li>
               <li>
-                <a href="/members/modify">정보 수정</a>
+                <a href="/members/modify/">회원 정보 수정</a>
               </li>
               <li>
-                <a href="/members/logout">로그아웃</a>
+                <a href="/members/logout/">로그아웃</a>
               </li>
             </ul>
           </div>

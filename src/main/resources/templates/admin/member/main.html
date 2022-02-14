@@ -29,7 +29,17 @@
                         <td th:text="${member.loginId}"></td>
                         <td th:text="${member.name}"></td>
                         <td th:text="${member.nickname}"></td>
-                        <td th:text="${member.regDate}"></td>
+                        <td th:text="${#temporals.format(member.regDate, 'yyyy-MM-dd')}"></td>
+                        <td>
+                            <a th:href="@{~/admin/members/}+${member.memberId}+@{/detail}">
+                                <span>   회원 정보   </span>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{~/admin/members/ban/}+${member.memberId}">
+                                <span>   회원 강제 탈퇴</span>
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -38,3 +48,24 @@
     </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
