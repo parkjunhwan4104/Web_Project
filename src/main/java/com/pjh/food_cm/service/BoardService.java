@@ -3,6 +3,7 @@ package com.pjh.food_cm.service;
 
 import com.pjh.food_cm.DTO.article.ArticleListDTO;
 import com.pjh.food_cm.DTO.board.BoardDTO;
+import com.pjh.food_cm.DTO.board.BoardListDTO;
 import com.pjh.food_cm.DTO.board.BoardModifyForm;
 import com.pjh.food_cm.DTO.board.BoardSaveForm;
 import com.pjh.food_cm.dao.BoardRepository;
@@ -23,6 +24,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+
+    @Transactional
+    public List<BoardListDTO>getBoardList(){
+        List<BoardListDTO> boardListDTOList=new ArrayList<>();
+
+        List<Board> boardList=boardRepository.findAll();
+
+        for(Board board:boardList){
+            BoardListDTO boardListDTO=new BoardListDTO(board);
+            boardListDTOList.add(boardListDTO);
+
+        }
+        return boardListDTOList;
+    }
 
     @Transactional
     public void save(BoardSaveForm boardSaveForm, Member member){

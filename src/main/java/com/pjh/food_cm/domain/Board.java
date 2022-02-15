@@ -29,7 +29,7 @@ public class Board {
     @JoinColumn(name="member_id")  //보드 혼자만 어떤 회원인 게시물을 쓰는지 알수 있도록 하기 위해 1대1
     private Member member;
 
-    @OneToMany(mappedBy = "board",fetch=FetchType.LAZY)  //cascade=CascadeType.REMOVE? 아닌가
+    @OneToMany(mappedBy = "board",fetch=FetchType.LAZY,cascade=CascadeType.REMOVE)  //cascade=CascadeType.REMOVE? 아닌가
     private List<Article> articles=new ArrayList<>();
 
     public static Board createBoard(String name,String detail,Member member){
