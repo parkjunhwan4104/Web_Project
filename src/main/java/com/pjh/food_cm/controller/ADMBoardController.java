@@ -33,6 +33,7 @@ public class ADMBoardController {
     }
 
 
+
     //게시판 저장
     @GetMapping("/boards/add")
     public String showAdd(Model model){

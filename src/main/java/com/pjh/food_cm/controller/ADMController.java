@@ -20,15 +20,9 @@ public class ADMController {
 
 
 
-    @GetMapping("/articles")
-    public String showManageArticle(){
-        return "admin/article/main";
-    }
 
-    @GetMapping("/board")
-    public String showManageBoards(){
-        return "admin/board/main";
-    }
+
+
 }
 
 
