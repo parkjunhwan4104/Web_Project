@@ -1,9 +1,12 @@
 package com.pjh.food_cm.service;
 
+import com.pjh.food_cm.DTO.article.ArticleDTO;
 import com.pjh.food_cm.DTO.member.MemberModifyForm;
 import com.pjh.food_cm.DTO.member.MemberSaveForm;
+import com.pjh.food_cm.DTO.member.myPageDTO;
 import com.pjh.food_cm.config.Role;
 import com.pjh.food_cm.dao.MemberRepository;
+import com.pjh.food_cm.domain.Article;
 import com.pjh.food_cm.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -23,6 +28,7 @@ import java.util.Optional;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+    private final ArticleService articleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -90,6 +96,21 @@ public class MemberService implements UserDetailsService {
                 ()-> new NoSuchElementException("해당 회원은 존재하지 않습니다.")
         );
         return byId.get();
+    }
+    public myPageDTO getMyArticles(String loginId){
+
+        List<ArticleDTO> articleDTOList=new ArrayList<>();
+
+        Member findMember = findByLoginId(loginId);
+
+        List<Article> articles = findMember.getArticles();
+
+        for(Article article:articles){
+            ArticleDTO findArticle = articleService.getArticle(article.getId());
+           articleDTOList.add(findArticle);
+        }
+        return new myPageDTO(findMember,articleDTOList);
+
     }
 
     /**
