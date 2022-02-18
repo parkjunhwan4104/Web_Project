@@ -1,80 +1,91 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
-    <!--아래 let 부터 /*]]*/ 전까지  자바 스크립트의 문법임 에러 메세지 경고 띄우는거(컨트롤러의 attribute의 err_msg와 매핑)-->
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
     <script th:inline="javascript">
-        /*<![CDATA[*/
-        let err_msg=[[${err_msg}]]
 
-        if(err_msg!=null || err_msg!=undefined){
+        /*<![CDATA[*/
+
+        let err_msg = [[ ${err_msg} ]]
+
+        if( err_msg != null || err_msg != undefined ){
+
         alert(err_msg);
+
         }
+
         /*]]*/
+
     </script>
     <script src="/js/join.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
-        <div class="mb-20"></div>
-    <div class="container">
 
-        <div class="content">
-            <div class="join-form">
+    <div class="mb-20"></div>
 
-                <div class="join-title">
-                    <h1>회원가입</h1>
+    <div class="container flex justify-center mx-auto">
+
+        <div class="join-form border p-20 rounded-lg shadow-md">
+
+            <div class="join-title text-2xl flex justify-center mb-12">
+                <span> 회원가입</span>
+            </div>
+
+            <form action="" th:action="@{~/members/join}" th:object="${memberSaveForm}" method="POST" onsubmit="return checkStatus()">
+                <div class="flex justify-center">
+                    <div class="flex-col">
+                        <div class="form-item mb-4">
+                            <input id="loginId" class="border rounded p-1 rounded bg-gray-50" name="loginId" type="text" placeholder="아이디" autocomplete="off" th:field="*{loginId}" th:errorclass="field-error">
+                            <span th:errors="*{loginId}"></span>
+                            <button type="button" onclick="checkDupleLoginId()">중복확인</button>
+                        </div>
+
+                        <div class="form-item mb-4">
+                            <input class="border rounded p-1 rounded bg-gray-50" name="loginPw" type="password" placeholder="비밀번호" autocomplete="off" th:field="*{loginPw}" th:errorclass="field-error">
+                            <span th:errors="*{loginPw}"></span>
+                        </div>
+
+                        <div class="form-item mb-4">
+                            <input class="border rounded p-1 rounded bg-gray-50" name="name" type="text" placeholder="이름" autocomplete="off" th:field="*{name}" th:errorclass="field-error">
+                            <span th:errors="*{name}"></span>
+                        </div>
+
+                        <div class="form-item mb-4">
+                            <input id="nickName" class="border rounded p-1 rounded bg-gray-50" name="nickname" type="text" placeholder="닉네임" autocomplete="off" th:field="*{nickname}" th:errorclass="field-error">
+                            <span th:errors="*{nickname}"></span>
+                            <button type="button" onclick="checkDupleNickName()">중복확인</button>
+                        </div>
+
+                        <div class="form-item mb-6">
+                            <input class="border rounded p-1 rounded bg-gray-50" name="email" type="email" placeholder="이메일" autocomplete="off" th:field="*{email}" th:errorclass="field-error">
+                            <span th:errors="*{email}"></span>
+                        </div>
+                    </div>
                 </div>
 
-                <form action="" th:action="@{~/members/join}" th:object="${memberSaveForm}" method="POST" onsubmit="return checkStatus()">
-                    <!--th:object인 memberSaveForm으로부터  th:field의 loginId를 매핑해줌 이때 *를 붙여줘야함 field에  -->
+                <div class="form-item flex justify-center mt-8">
+                    <button class="border bg-gray-500 p-1 rounded text-white" type="button" onclick="finalCheck()">최종 중복확인</button>
+                </div>
 
-                    <div class="join-item">
-                        <span>아이디</span>
-                        <input id="loginId" type="text" name="loginId" th:field="*{loginId}" th:errorclass="field-error">
-                        <span th:errors="*{loginId}"></span>
-                        <button type="button" onclick="checkDupleLoginId()">중복확인</button>
-                    </div>
+                <div class="form-item flex justify-center mt-8">
+                    <button class="mr-4 border bg-blue-500 p-2 rounded text-white">회원가입</button>
+                    <a href="/">
+                        <button class="border bg-blue-500 p-2 rounded text-white" type="button">
+                            취소
+                        </button>
+                    </a>
+                </div>
 
-                    <div class="join-item">
-                        <span>비밀번호</span>
-                        <input type="password" name="loginPw" th:field="*{loginPw}" th:errorclass="field-error">
-                        <span th:errors="*{loginPw}"></span>
-                    </div>
+            </form>
 
-                    <div class="join-item">
-                        <span>이름</span>
-                        <input type="text" name="name" th:field="*{name}" th:errorclass="field-error">
-                        <span th:errors="*{name}"></span>
-                    </div>
-
-                    <div class="join-item">
-                        <span>닉네임</span>
-                        <input type="text" name="nickname" th:field="*{nickname}" th:errorclass="field-error">
-                        <span th:errors="*{nickname}"></span>
-                    </div>
-
-                    <div class="join-item">
-                        <span>이메일</span>
-                        <input type="email" name="email" th:field="*{email}" th:errorclass="field-error">
-                        <span th:errors="*{email}"></span>
-                    </div>
-
-
-                    <div class="join-item">
-                        <button>회원가입</button>
-                        <a href="/">
-                            <button type="button">취소</button>
-                        </a>
-                    </div>
-
-                </form>
-            </div>
         </div>
+
     </div>
+
 </div>
 
 </body>
