@@ -10,11 +10,12 @@
         /*<![CDATA[*/
         let err_msg=[[${err_msg}]]
 
-        if(err_msg!=null ||err_msg!=undefined){
+        if(err_msg!=null || err_msg!=undefined){
         alert(err_msg);
         }
         /*]]*/
     </script>
+    <script src="/js/join.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -28,13 +29,14 @@
                     <h1>회원가입</h1>
                 </div>
 
-                <form action="" th:action="@{~/members/join}" th:object="${memberSaveForm}" method="POST">
+                <form action="" th:action="@{~/members/join}" th:object="${memberSaveForm}" method="POST" onsubmit="return checkStatus()">
                     <!--th:object인 memberSaveForm으로부터  th:field의 loginId를 매핑해줌 이때 *를 붙여줘야함 field에  -->
 
                     <div class="join-item">
                         <span>아이디</span>
-                        <input type="text" name="loginId" th:field="*{loginId}" th:errorclass="field-error">
+                        <input id="loginId" type="text" name="loginId" th:field="*{loginId}" th:errorclass="field-error">
                         <span th:errors="*{loginId}"></span>
+                        <button type="button" onclick="checkDupleLoginId()">중복확인</button>
                     </div>
 
                     <div class="join-item">

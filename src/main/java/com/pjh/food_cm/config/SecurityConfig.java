@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorize ->authorize
 
-                .mvcMatchers("/members/join","/members/login").anonymous() //URL이 간소화될수있도록함,  회원가입하는 url, 어나니머스는 로그인이 되지 않은 사람도 해당 페이지를 들어갈수 있도록함
+                .mvcMatchers("/members/join","/members/login","/members/check/**").anonymous() //URL이 간소화될수있도록함,  회원가입하는 url, 어나니머스는 로그인이 되지 않은 사람도 해당 페이지를 들어갈수 있도록함
                 .mvcMatchers(
                         "/articles/**","/","/members/modify/**","/boards/add").permitAll() // 로그인한 사람만 사용할 수 있도록 하는거
                 .mvcMatchers("/boards/**","/mypage/**").hasAnyRole("MEMBER","ADMIN")
