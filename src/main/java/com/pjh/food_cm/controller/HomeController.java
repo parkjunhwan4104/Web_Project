@@ -29,11 +29,12 @@ public class HomeController {
         List<BoardListDTO> boardListDTOList=boardService.getBoardList();
 
         for(int i=1; i<=boardListDTOList.size();i++){
-            Long xLong=new Long(i);
+            Long xLong=Long.valueOf(i);
             BoardDTO boardDTO=boardService.getBoardDetail(xLong);
+            model.addAttribute("board"+xLong,boardDTO);
         }
 
-        model.addAttribute("boardList",boardListDTOList);
+        //model.addAttribute("boardList",boardListDTOList);
         return "index";
     }
 }

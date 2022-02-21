@@ -12,6 +12,9 @@
 <div class="container">
 
     <div class="contents">
+
+        <span th:text="${board2.name}"></span>
+        <span th:each="board: ${board2.articleListDTO}"></span>
         <!--
         <table>
             <thead>

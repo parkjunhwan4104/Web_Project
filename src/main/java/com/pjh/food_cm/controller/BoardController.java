@@ -1,5 +1,6 @@
 package com.pjh.food_cm.controller;
 
+import com.pjh.food_cm.DTO.article.ArticleListDTO;
 import com.pjh.food_cm.DTO.board.BoardDTO;
 import com.pjh.food_cm.DTO.board.BoardModifyForm;
 import com.pjh.food_cm.DTO.board.BoardSaveForm;
@@ -14,13 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -42,11 +42,41 @@ public class BoardController {
     }
 
     @GetMapping("/boards/{id}")
-    public String showBoardDetail(@PathVariable(name="id")Long id,Model model){
+    public String showBoardDetail(@PathVariable(name="id")Long id, Model model, @RequestParam(name="page",defaultValue = "1") int page){
+
+        int size =10;
+
 
         try {
             BoardDTO boardDetail = boardService.getBoardDetail(id);
+            List<ArticleListDTO> articleListDTO=boardDetail.getArticleListDTO();
+            Collections.reverse(articleListDTO);
+
+            // 한 페이지에서의 인덱스
+            int startIndex=(page-1)*size;
+            int lastIndex=(page*size) -1;
+
+            //마지막 페이지 기준
+            int lastPage=(int)Math.ceil(articleListDTO.size()/(double)size);
+            
+            if(page==lastPage){
+                lastIndex= articleListDTO.size();
+                
+            }
+            else if(page> lastPage){
+                return "redirect:/";
+            }
+            else{
+                lastIndex+=1;
+            }
+            
+            //페이지 자르기
+            List<ArticleListDTO> articlePage= articleListDTO.subList(startIndex, lastIndex); //어디서부터 자르고 어디까지 자를 건지( startIndex가 0이고 lastIndex가 9이면 0~8까지만 잘라짐 따라서 위에서 lastIndex에 1을 더해준거
+
             model.addAttribute("board", boardDetail); //html에서 board라는 이름으로 boardDetail값이 들어가는거
+            model.addAttribute("articles",articlePage);
+            model.addAttribute("maxPage",lastPage);
+            model.addAttribute("currentPage",page);
         }
         catch(Exception e){
             return "redirect:/";
