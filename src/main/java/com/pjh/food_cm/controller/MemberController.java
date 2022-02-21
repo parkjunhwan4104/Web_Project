@@ -35,6 +35,16 @@ public class MemberController {
 
     }
 
+    @RequestMapping("/members/check/email")
+    @ResponseBody //위의 url을 보지 않고 처리
+    public CheckStatus checkEmail(@RequestParam String email){
+        boolean isExist=memberService.isDupleEmail(email);
+
+        CheckStatus checkStatus=new CheckStatus(isExist);
+
+        return checkStatus;
+    }
+
     @RequestMapping("/members/check/nickName")
     @ResponseBody
     public CheckStatus checkDupleNickName(@RequestParam String nickName){

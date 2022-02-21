@@ -9,20 +9,31 @@
 </head>
 <body>
 <div layout:fragment="content">
-<!--<div class="container">
+<div class="container">
 
     <div class="contents">
+        <!--
+        <table>
+            <thead>
+                <tr>
+                    <th>게시판 번호</th>
+                    <th>게시물 번호</th>
+                    <th>게시물 제목</th>
+               </tr>
+            </thead>
 
-        <h1> 음식 커뮤니티 환영합니다. </h1>
+            <tbody>
+                <tr th:each="board: ${boardList}">
+                    <td th:text="${board.name}"></td>
 
-        <hr>
-
-        <a href="/members/join"> 회원가입으로 </a>
-        <a href="/members/login"> 로그인으로 </a>
+                </tr>
+            </tbody>
+        </table>
+        -->
 
     </div>
 
-</div>-->
+</div>
 </div>
 </body>
 </html>

@@ -1,6 +1,8 @@
 let CHECK_STATUS=false;
 let LOGIN_ID_STATUS=false;
 let NICKNAME_ID_STATUS=false;
+let EMAIL_STATUS=false;
+
 let FINAL_CHECK=false;
 
 
@@ -108,9 +110,62 @@ async function checkDupleNickName(){
 
 }
 
+async function checkDupleEmail(){
+
+        let inputEmail= document.querySelector("#email")
+        let email=inputEmail.value;
+
+        await fetch("http://localhost:8095/members/check/email?email=" +email)
+        .then(
+
+            (response)=> {
+                return response.json();
+            }
+
+        )
+        .then(
+
+            (data) =>{
+                let emailCheck=data;
+
+
+                console.log(emailCheck.status);
+
+
+                    if(emailCheck.status){
+                        EMAIL_STATUS=false;
+                        console.log(EMAIL_STATUS);
+                        alert("이미 존재하는 이메일 입니다.");
+                    }
+                    else if(email===""){
+                        EMAIL_STATUS=false;
+                        console.log(EMAIL_STATUS);
+                        alert("입력하신 이메일이 공백상태 입니다.");
+                    }
+
+                    else{
+                        EMAIL_STATUS=true;
+                        console.log(EMAIL_STATUS);
+                        alert("사용할 수 있는 이메일 입니다.");
+                    }
+
+
+            }
+
+        )
+        .catch(
+            (error) =>{
+                console.log(error);
+            }
+        )
+
+
+}
+
 function finalCheck(){
         checkDupleLoginId();
         checkDupleNickName();
+        checkDupleEmail();
         FINAL_CHECK=true;
 
 }
@@ -120,7 +175,7 @@ function checkStatus(){
 
 
 
-    if(LOGIN_ID_STATUS&&NICKNAME_ID_STATUS){
+    if(LOGIN_ID_STATUS&&NICKNAME_ID_STATUS&&EMAIL_STATUS){
 
        CHECK_STATUS=true;
 
