@@ -42,14 +42,30 @@ public class BoardController {
     }
 
     @GetMapping("/boards/{id}")
-    public String showBoardDetail(@PathVariable(name="id")Long id, Model model, @RequestParam(name="page",defaultValue = "1") int page){
+    public String showBoardDetail(@PathVariable(name="id")Long id, Model model, @RequestParam(name="page",defaultValue = "1") int page,@RequestParam(name="searchKeyword",defaultValue ="")String searchKeyword){
 
         int size =10;
 
 
         try {
             BoardDTO boardDetail = boardService.getBoardDetail(id);
+
             List<ArticleListDTO> articleListDTO=boardDetail.getArticleListDTO();
+
+            List<ArticleListDTO> store=new ArrayList<>();
+
+            for(ArticleListDTO listDTO:articleListDTO){
+                if(listDTO.getTitle().contains(searchKeyword)){
+                    store.add(listDTO);
+                }
+            }
+
+            if(store.size()!=0){
+                for(ArticleListDTO listDTO:store){
+                    articleListDTO=store;
+                }
+            }
+
             Collections.reverse(articleListDTO);
 
             // 한 페이지에서의 인덱스
@@ -73,10 +89,15 @@ public class BoardController {
             //페이지 자르기
             List<ArticleListDTO> articlePage= articleListDTO.subList(startIndex, lastIndex); //어디서부터 자르고 어디까지 자를 건지( startIndex가 0이고 lastIndex가 9이면 0~8까지만 잘라짐 따라서 위에서 lastIndex에 1을 더해준거
 
+            if(!(searchKeyword.equals("")&& store.size()==0)){
+                articlePage=store;
+            }
+
             model.addAttribute("board", boardDetail); //html에서 board라는 이름으로 boardDetail값이 들어가는거
             model.addAttribute("articles",articlePage);
             model.addAttribute("maxPage",lastPage);
             model.addAttribute("currentPage",page);
+            model.addAttribute("keyword",searchKeyword);
         }
         catch(Exception e){
             return "redirect:/";

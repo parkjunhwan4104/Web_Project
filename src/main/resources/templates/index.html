@@ -6,33 +6,142 @@
 <head>
     <meta charset="UTF-8">
     <title>음식 커뮤니티</title>
+    <style>
+        .width{
+            width:100%;
+            margin-top:5%;
+
+
+
+        }
+        .Left{
+            margin-left:100px;
+            width:25%;
+
+
+            position:absolute;
+
+        }
+        .Left .left{
+
+
+            position:relative;
+            display:block;
+
+
+        }
+        .Center{
+            margin-left:500px;
+            width:25%;
+
+            position:absolute;
+        }
+        .Center .center{
+
+            display:block;
+            position:relative;
+
+
+
+        }
+        .Right{
+            margin-left:900px;
+            width:25%;
+
+
+            position:absolute;
+        }
+        .Right .right{
+            display:block;
+            position:relative;
+
+        }
+        bold{
+            font-weight:bold;
+        }
+        .space{
+            padding:0 5px;
+
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
 <div class="container">
 
     <div class="contents">
+        <div class="width">
+            <div class="Left">
+                <bold class="left" th:text="${board1.name}">1</bold>
+                <table class="left">
+                    <thead >
+                    <tr>
+                        <th class="space">게시물 번호</th>
+                        <th class="space">게시물 제목</th>
+                        <th class="space">게시물 작성자</th>
+                    </tr>
+                    </thead>
 
-        <span th:text="${board2.name}"></span>
-        <span th:each="board: ${board2.articleListDTO}"></span>
-        <!--
-        <table>
-            <thead>
-                <tr>
-                    <th>게시판 번호</th>
-                    <th>게시물 번호</th>
-                    <th>게시물 제목</th>
-               </tr>
-            </thead>
+                    <tbody>
+                    <tr th:each="board: ${board1.articleListDTO}">
+                        <td th:text="${board.id}"></td>
+                        <td th:text="${board.title}"></td>
+                        <td th:text="${board.nickname}"></td>
 
-            <tbody>
-                <tr th:each="board: ${boardList}">
-                    <td th:text="${board.name}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="Center">
+                <bold class="center" th:text="${board2.name}">2</bold>
+                <table class="center">
+                    <thead >
+                    <tr>
+                        <th class="space">게시물 번호</th>
+                        <th class="space">게시물 제목</th>
+                        <th class="space">게시물 작성자</th>
+                    </tr>
+                    </thead>
 
-                </tr>
-            </tbody>
-        </table>
-        -->
+                    <tbody>
+                    <tr th:each="board: ${board2.articleListDTO}">
+                        <td th:text="${board.id}"></td>
+                        <td th:text="${board.title}"></td>
+                        <td th:text="${board.nickname}"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="Right">
+                <bold class="right" th:text="${board3.name}">3</bold>
+                <table class="right">
+                    <thead >
+                    <tr>
+                        <th class="space">게시물 번호</th>
+                        <th class="space">게시물 제목</th>
+                        <th class="space">게시물 작성자</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="board: ${board3.articleListDTO}">
+                        <td th:text="${board.id}"></td>
+                        <td th:text="${board.title}"></td>
+                        <td th:text="${board.nickname}"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+
+
 
     </div>
 

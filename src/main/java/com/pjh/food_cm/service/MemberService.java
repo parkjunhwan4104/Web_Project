@@ -29,6 +29,7 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final ArticleService articleService;
+    private Member member;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -153,7 +154,13 @@ public class MemberService implements UserDetailsService {
         return memberRepository.existsByEmail(email);
     }
 
-    
+    @Transactional
+    public void changeTempPw(String pw,Member member){
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        member.changePw(bCryptPasswordEncoder.encode(pw));
+
+
+    }
 
 }
 

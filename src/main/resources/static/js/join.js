@@ -186,12 +186,12 @@ function checkStatus(){
 
     if(!CHECK_STATUS){
 
-        alert("중복확인을 해주시기 바랍니다.")
+        alert("중복확인을 해주시기 바랍니다.");
         return false;
     }
     else{
         if(!FINAL_CHECK){
-            alert("최종 중복확인을 해주시기 바랍니다.")
+            alert("최종 중복확인을 해주시기 바랍니다.");
             return false;
         }
     }
