@@ -1,0 +1,48 @@
+server:
+  port: 8090
+
+
+spring:
+  config:
+    activate:
+      on-profile: dev    #깃에 올릴 용도
+
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: [google mail]  #gmail 계정
+    password: [google app password]  # 비밀번호(gmail 계정의 비빌번호가 아님)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  devtools:
+    livereload:
+      enabled: true
+
+    freemarker:
+      cache: false
+
+    thymeleaf:
+      cache: false
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/[데이터베이스 이름]?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull&connectTimeout=60
+    username: [아이디]
+    password: [비밀번호]
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      open-in-view: true
+
+
