@@ -23,6 +23,7 @@
       </div>
 
       <form action="" id="findForm" method="POST">
+        
         <div class="flex justify-center">
           <div class="flex-col">
             <div class="form-item mb-4">
@@ -30,7 +31,7 @@
             </div>
 
             <div class="form-item mb-4">
-              <input class="border rounded p-1 rounded bg-gray-50" id=email" type="email" name="email"  placeholder="이메일" autocomplete="off" required>
+              <input class="border rounded p-1 rounded bg-gray-50" id="email" type="email" name="email"  placeholder="이메일" autocomplete="off" required>
             </div>
             <div class="form-item flex justify-center mt-12">
               <button class="mr-4 border bg-gray-500 p-1 rounded text-white">
@@ -48,7 +49,8 @@
 
 
   </div>
+  <script src="/js/findPw.js"></script>  <!-- 위의 폼 태그로 부터 정보를 다 받은 후에 js를 불러야 하므로 body 안에 넣은거임 -->
 </div>
-<script src="/js/findPw.js"></script>
+
 </body>
 </html>

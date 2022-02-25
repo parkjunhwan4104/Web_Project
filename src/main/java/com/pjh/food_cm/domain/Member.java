@@ -71,8 +71,8 @@ public class Member implements UserDetails {
 
 
     @Override
-    public Collection getAuthorities() {
-        List authorities=new ArrayList<>();
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities=new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(this.authority.getValue()));
 
         return authorities;
