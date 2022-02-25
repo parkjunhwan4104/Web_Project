@@ -7,8 +7,31 @@
   <meta charset="UTF-8">
   <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
   <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
   <title>비밀번호 찾기</title>
 </head>
+<style>
+  html,body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+  }
+  .container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+   }
+
+
+
+
+</style>
+
 <body>
 <div layout:fragment="content">
 
@@ -16,14 +39,17 @@
 
   <div class="container flex justify-center mx-auto">
 
-    <div class="join-form border p-20 rounded-lg shadow-md">
+
+
+
+    <div id="find-content" class="join-form border p-20 rounded-lg shadow-md">
 
       <div class="login-title text-2xl flex justify-center mb-12">
         <span> 비밀번호 찾기 </span>
       </div>
 
       <form action="" id="findForm" method="POST">
-        
+
         <div class="flex justify-center">
           <div class="flex-col">
             <div class="form-item mb-4">
@@ -44,7 +70,13 @@
           </div>
         </div>
       </form>
+
+
     </div>
+    <div class="text-center" id="progress">
+      <i class="fas fa-spinner fa-3x fa-spin"></i>
+    </div>
+
 
 
 

@@ -1,8 +1,12 @@
 let token = document.querySelector("meta[name='_csrf']").getAttribute("content");
 //let header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+let progress=document.querySelector("#progress")
+let findContent=document.querySelector("#find-content");
 
 const findForm=document.querySelector("#findForm")
 findForm.addEventListener("submit",findPw);
+
+progress.hidden=true;
 
 async function findPw(e){
 
@@ -13,14 +17,16 @@ async function findPw(e){
 
     if(loginId===null || loginId===""){
         alert("아이디를 입력해 주시기 바랍니다.");
+
     }
 
     if(email===null || email===""){
             alert("이메일을 입력해 주시기 바랍니다.");
+
     }
 
     let data={
-        method:"POST"
+        method:"POST",
         body:JSON.stringify(
             {
                 loginId: loginId,
@@ -32,7 +38,10 @@ async function findPw(e){
         'X-CSRF-TOKEN':  token,
         }
 
-    }
+    };
+    findContent.hidden=true;
+    progress.hidden=false;
+
     await fetch("http://localhost:8095/mails/find/pw",data)  //해당 url에 대한 추가적인 데이터를 넣어주는거(객체로 받아서 넣어준거)
     .then(
         (response) =>{
@@ -43,7 +52,9 @@ async function findPw(e){
         (data)=>{  //이 데이터에는 mailController의 getForgotPassword메소드의 리턴값에 대한 데이터임
 
         if(!data){   //데이터가 안들어왔을 때
-            alert("이메일 발송 실패, 이메일을 확인해 주시기 바랍니다.");
+           findContent.hidden=false;
+           progress.hidden=true;  //spinner가 안보이고 원래 화면이 보여지는거
+            alert("이메일 발송 실패, 이메일 및 아이디를 확인해 주시기 바랍니다.");
             return;
         }
         else{
@@ -55,6 +66,9 @@ async function findPw(e){
     )
     .catch(
         (error)=>{
+
+            findContent.hidden=false;
+            progress.hidden=true;
             console.log(error);
             alert("메일 발송에 실패하였습니다. 이메일 혹은 아이디를 확인하여 주시기 바랍니다.")
         }
