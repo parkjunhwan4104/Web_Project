@@ -8,6 +8,7 @@ import com.pjh.food_cm.domain.Member;
 import com.pjh.food_cm.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,12 +46,28 @@ public class MemberController {
         return checkStatus;
     }
 
+
+
     @RequestMapping("/members/check/nickName")
     @ResponseBody
     public CheckStatus checkDupleNickName(@RequestParam String nickName){
         boolean isExist=memberService.isDupleNickName(nickName);
         CheckStatus checkStatus=new CheckStatus(isExist);
         return checkStatus;
+    }
+
+
+    @DeleteMapping("/members")
+    @ResponseBody
+    public boolean doDelete(@RequestBody String loginId, Principal principal){
+        if(!loginId.equals(principal.getName())){
+            return false;
+        }
+
+        SecurityContextHolder.clearContext();
+        memberService.deleteMember(loginId);
+
+        return true;
     }
 
 

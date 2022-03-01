@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/members/join","/members/login","/members/check/**","/members/find/pw","/mails/find/pw").anonymous() //URL이 간소화될수있도록함,  회원가입하는 url, 어나니머스는 로그인이 되지 않은 사람도 해당 페이지를 들어갈수 있도록함
                 .mvcMatchers(
                         "/articles/**","/","/members/modify/**","/boards/**").permitAll() // 로그인한 사람만 사용할 수 있도록 하는거
-                .mvcMatchers("/boards/**","/mypage/**").hasAnyRole("MEMBER","ADMIN")
+                .mvcMatchers("/mypage/**","/members/**").hasAnyRole("MEMBER","ADMIN") //ADMIN이랑 MEMBER 둘다 해당 URL 접속가능
                 .mvcMatchers("/admin/**").hasRole("ADMIN") //ADMIN만 해당 URL로 접속할수 있도록함
                 .anyRequest()
                 .denyAll() //위의 3개 페이지말고는 모두 다 거절해라

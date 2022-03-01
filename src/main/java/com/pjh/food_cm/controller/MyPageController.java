@@ -17,13 +17,14 @@ public class MyPageController {
     private final MemberService memberService;
 
     @GetMapping("/mypage/{loginId}")
-    public String showMypage(@PathVariable(name="loginId")String loginId, Model model, Principal principal){
+    public String showMyPage(@PathVariable(name="loginId")String loginId, Model model, Principal principal){
         if(!principal.getName().equals(loginId)){
             return "redirect:/";
 
         }
         myPageDTO articles = memberService.getMyArticles(principal.getName());
         model.addAttribute("memberInfo",articles);
+        model.addAttribute("loginMember",principal.getName());
         return "user/member/mypage";
 
     }
