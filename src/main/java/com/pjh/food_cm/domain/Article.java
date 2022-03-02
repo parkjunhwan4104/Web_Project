@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter //값을 다른곳에서 사용할수 있도록 즉 articleDTO에서 사용할수 있도록
-@NoArgsConstructor(access= AccessLevel.PROTECTED)  //무분별하게 객체생성을 막기위해
+@NoArgsConstructor(access= AccessLevel.PROTECTED)  //무분별하게 객체생성을 막기위해, Article 객체를 다른 곳에서 생성하는 것을 막는것(DB의 테이블이 변경되었을 때 수정해야할 부분을 줄이기 위해(DTO 사용 이유)
 public class Article {
 
     @Id
