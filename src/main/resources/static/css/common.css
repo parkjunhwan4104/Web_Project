@@ -8,3 +8,8 @@
 body{
     font-family: 'SUIT-Medium';
 }
+
+.content-container{
+
+    min-height:75vh;
+}
