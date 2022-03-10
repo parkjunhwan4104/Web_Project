@@ -35,7 +35,7 @@
                 <span> 회원가입</span>
             </div>
 
-            <form action="" th:action="@{~/members/join}" th:object="${memberSaveForm}" method="POST" onsubmit="return checkStatus()">
+            <form th:action="@{http://localhost:8095/members/join}"   th:object="${memberSaveForm}" method="POST" onsubmit="return checkStatus()">
                 <div class="flex justify-center">
                     <div class="flex-col">
                         <div class="form-item mb-4">
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="form-item mb-4">
-                            <input id="nickName" class="border rounded p-1 rounded bg-gray-50" name="nickname" type="text" placeholder="닉네임" autocomplete="off" th:field="*{nickname}" th:errorclass="field-error">
+                            <input id="nickname" class="border rounded p-1 rounded bg-gray-50" name="nickname" type="text" placeholder="닉네임" autocomplete="off" th:field="*{nickname}" th:errorclass="field-error">
                             <span th:errors="*{nickname}"></span>
                             <button type="button" onclick="checkDupleNickName()">중복확인</button>
                         </div>
@@ -68,9 +68,7 @@
                     </div>
                 </div>
 
-                <div class="form-item flex justify-center mt-8">
-                    <button class="border bg-gray-500 p-1 rounded text-white" type="button" onclick="finalCheck()">최종 중복확인</button>
-                </div>
+
 
                 <div class="form-item flex justify-center mt-8">
                     <button class="mr-4 border bg-blue-500 p-2 rounded text-white">회원가입</button>

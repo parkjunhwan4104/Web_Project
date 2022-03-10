@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Member implements UserDetails {
     @Id
-    @Column(name="member_id")
+    @Column(name="board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) //순서대로 정렬을 한다
     private Long id;
 
@@ -112,3 +112,19 @@ public class Member implements UserDetails {
         this.loginPw=password;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 package com.pjh.food_cm.dao;
 
+import com.pjh.food_cm.config.Role;
 import com.pjh.food_cm.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -14,4 +15,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {   //DBëž
     boolean existsByNickname(String nickname);
     boolean existsByEmail(String email);
 
+    Long countTodayMember();
+
+    Long countByAuthorityLike(Role authority);
 }

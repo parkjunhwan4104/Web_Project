@@ -70,10 +70,11 @@ public class BoardController {
 
             // 한 페이지에서의 인덱스
             int startIndex=(page-1)*size;
-            int lastIndex=(page*size) -1;
+            int lastIndex = ((page -1) * size) + 9;
 
             //마지막 페이지 기준
             int lastPage=(int)Math.ceil(articleListDTO.size()/(double)size);
+
             
             if(page==lastPage){
                 lastIndex= articleListDTO.size();
@@ -85,11 +86,11 @@ public class BoardController {
             else{
                 lastIndex+=1;
             }
-            
+
             //페이지 자르기
             List<ArticleListDTO> articlePage= articleListDTO.subList(startIndex, lastIndex); //어디서부터 자르고 어디까지 자를 건지( startIndex가 0이고 lastIndex가 9이면 0~8까지만 잘라짐 따라서 위에서 lastIndex에 1을 더해준거
 
-            if(!(searchKeyword.equals("")&& store.size()==0)){
+            if(!searchKeyword.equals("")&& store.size()==0){
                 articlePage=store;
             }
 

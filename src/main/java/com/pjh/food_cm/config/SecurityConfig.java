@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .denyAll() //위의 3개 페이지말고는 모두 다 거절해라
         )
+
                 .formLogin()
                     .loginPage("/members/login")
                     .loginProcessingUrl("/members/doLogin")   //로그인이 이루어지는 페이지

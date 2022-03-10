@@ -3,7 +3,7 @@ let LOGIN_ID_STATUS=false;
 let NICKNAME_ID_STATUS=false;
 let EMAIL_STATUS=false;
 
-let FINAL_CHECK=false;
+
 
 
 
@@ -60,7 +60,7 @@ async function checkDupleLoginId(){
 
 async function checkDupleNickName(){
 
-        let inputNickName= document.querySelector("#nickName")
+        let inputNickName= document.querySelector("#nickname")
         let nickName=inputNickName.value;
 
         await fetch("http://localhost:8095/members/check/nickName?nickName=" +nickName)
@@ -162,13 +162,13 @@ async function checkDupleEmail(){
 
 }
 
-function finalCheck(){
+/*function finalCheck(){
         checkDupleLoginId();
         checkDupleNickName();
         checkDupleEmail();
         FINAL_CHECK=true;
 
-}
+}*/
 
 function checkStatus(){
 
@@ -189,11 +189,6 @@ function checkStatus(){
         alert("중복확인을 해주시기 바랍니다.");
         return false;
     }
-    else{
-        if(!FINAL_CHECK){
-            alert("최종 중복확인을 해주시기 바랍니다.");
-            return false;
-        }
-    }
+
 }
 
