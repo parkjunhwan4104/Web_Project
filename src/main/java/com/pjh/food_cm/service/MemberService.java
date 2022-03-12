@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -100,19 +97,24 @@ public class MemberService implements UserDetailsService {
     }
     public myPageDTO getMyArticles(String loginId){
 
-        List<ArticleDTO> articleDTOList=new ArrayList<>();
+        List<ArticleDTO> articleDTOList = new ArrayList<>();
 
         Member findMember = findByLoginId(loginId);
 
         List<Article> articles = findMember.getArticles();
 
-        for(Article article:articles){
+        Collections.reverse(articles);
+
+        for( Article article : articles ){
             ArticleDTO findArticle = articleService.getArticle(article.getId());
-           articleDTOList.add(findArticle);
+            articleDTOList.add(findArticle);
         }
-        return new myPageDTO(findMember,articleDTOList);
+
+        return new myPageDTO(findMember, articleDTOList);
+
 
     }
+
 
     /**
      * 회원정보 수정

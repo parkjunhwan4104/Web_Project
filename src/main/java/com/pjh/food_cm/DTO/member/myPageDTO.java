@@ -12,11 +12,17 @@ import java.util.List;
 @NoArgsConstructor
 public class myPageDTO {
 
+    private String loginId;
     private String nickname;
+
     private List<ArticleDTO> articles;
 
-    public myPageDTO(Member member,List<ArticleDTO>articles){
-        this.nickname=member.getNickname();
-        this.articles=articles;
+    public myPageDTO(Member member, List<ArticleDTO> articles){
+
+        this.loginId = member.getLoginId();
+        this.nickname = member.getNickname();
+
+        this.articles = articles;
+
     }
 }

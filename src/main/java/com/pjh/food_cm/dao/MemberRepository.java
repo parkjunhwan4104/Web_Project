@@ -16,7 +16,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {   //DBëž
     boolean existsByNickname(String nickname);
     boolean existsByEmail(String email);
 
-    @Query(value="SELECT COUNT(*) FROM `member` WHERE DATE_FORMAT(regDate, '%y-%m-%d') =CURDATE()",nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM `member` WHERE DATE_FORMAT(reg_date, '%y-%m-%d') = CURDATE()", nativeQuery = true)
     Long countTodayMember();
 
     Long countByAuthorityLike(Role authority);

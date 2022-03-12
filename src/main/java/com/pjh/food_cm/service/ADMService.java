@@ -14,6 +14,7 @@ public class ADMService {
 
     private final MemberRepository memberRepository;
 
+
     public MemberStateDto getMemberStateDto(){
 
         return new MemberStateDto(
@@ -23,6 +24,8 @@ public class ADMService {
                 memberRepository.countByAuthorityLike(Role.MEMBER)
         );
     }
+
+
 
 }
 
