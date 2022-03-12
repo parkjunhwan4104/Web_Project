@@ -121,19 +121,20 @@ public class MemberService implements UserDetailsService {
      * @return
      */
     @Transactional
-    public Long modifyMember(Long id,MemberModifyForm memberModifyForm, String loginId){
-        Member member=findById(id);
+    public Long modifyMember(MemberModifyForm memberModifyForm, String loginId) {
 
+        Member findMember = findByLoginId(loginId);
 
-        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        BCryptPasswordEncoder bCryptPasswordEncoder =  new BCryptPasswordEncoder();
 
-
-        member.modifyMember(
+        findMember.modifyMember(
                 bCryptPasswordEncoder.encode(memberModifyForm.getLoginPw()),
                 memberModifyForm.getNickname(),
                 memberModifyForm.getEmail()
         );
-        return member.getId();
+
+        return findMember.getId();
+
     }
 
 

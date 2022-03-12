@@ -40,11 +40,11 @@
                 <a th:href="@{~/admin/page}">관리자 페이지</a>
               </li>
 
-              <li>
-                <a href="/articles/write/">게시글 작성</a>
+              <li sec:authorize="hasRole('ROLE_MEMBER')">
+                <a th:href="@{~/mypage/} + ${#authentication.name}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">마이 페이지</a>
               </li>
               <li>
-                <a href="/members/modify/">회원 정보 수정</a>
+                <a th:href="@{~/members/modify/} + ${#authentication.name}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">회원정보 수정</a>
               </li>
               <li>
                 <a href="/members/logout/">로그아웃</a>

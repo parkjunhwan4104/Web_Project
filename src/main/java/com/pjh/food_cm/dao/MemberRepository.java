@@ -3,6 +3,7 @@ package com.pjh.food_cm.dao;
 import com.pjh.food_cm.config.Role;
 import com.pjh.food_cm.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {   //DBëž
     boolean existsByNickname(String nickname);
     boolean existsByEmail(String email);
 
+    @Query(value="SELECT COUNT(*) FROM `member` WHERE DATE_FORMAT(regDate, '%y-%m-%d') =CURDATE()",nativeQuery = true)
     Long countTodayMember();
 
     Long countByAuthorityLike(Role authority);

@@ -77,6 +77,7 @@ public class Datainit {
                         Role.MEMBER
                 );
                 memberRepository.save(member);
+
                 for(int k=0;k<=2;k++) {
                     for (int j = 1; j <= 3; j++) {
                         Article article = Article.createArticle(
@@ -88,6 +89,8 @@ public class Datainit {
                         articleRepository.save(article);
                     }
                 }
+
+
             }
 
 
