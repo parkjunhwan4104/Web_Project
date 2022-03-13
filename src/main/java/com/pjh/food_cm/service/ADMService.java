@@ -1,10 +1,8 @@
 package com.pjh.food_cm.service;
 
-import com.pjh.food_cm.DTO.ADM.BoardStateDTO;
-import com.pjh.food_cm.DTO.ADM.MemberStateDto;
-import com.pjh.food_cm.DTO.ADM.admBoardCountDto;
-import com.pjh.food_cm.DTO.ADM.admBoardNameDto;
+import com.pjh.food_cm.DTO.ADM.*;
 import com.pjh.food_cm.config.Role;
+import com.pjh.food_cm.dao.ArticleRepository;
 import com.pjh.food_cm.dao.BoardRepository;
 import com.pjh.food_cm.dao.MemberRepository;
 import com.pjh.food_cm.domain.Board;
@@ -22,6 +20,7 @@ public class ADMService {
 
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
+    private final ArticleRepository articleRepository;
 
     public MemberStateDto getMemberStateDto(){
 
@@ -63,7 +62,10 @@ public class ADMService {
     }
 
 
+    public ArticleStateDto getArticleStateDto() {
 
+        return new ArticleStateDto(articleRepository.count());
+    }
 }
 
 
